@@ -1,11 +1,21 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Employee } from '../types/employee';
 import Image from 'next/image';
 
 export default function Testimonial({ employees }: { employees: Employee[] }) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+
+    useEffect(() => {
+        if (!isPaused) {
+            const interval = setInterval(() => {
+                setCurrentIndex((prev) => prev === employees.length - 1 ? 0 : prev + 1);
+            }, 10000);
+            return () => clearInterval(interval);
+        }
+    }, [isPaused, employees.length]);
 
     const handlePrevious = () => {
         setCurrentIndex((prev) =>
@@ -23,7 +33,7 @@ export default function Testimonial({ employees }: { employees: Employee[] }) {
     const author = employees.find(emp => emp['Name'] === currentTestimonial.Name);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-4 items-center mt-18 min-h-[300px] py-10">
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-4 items-center mt-18 min-h-[300px] py-10" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
             <button
                 onClick={handlePrevious}
                 className="hidden md:block border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"

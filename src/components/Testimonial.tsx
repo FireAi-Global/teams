@@ -23,9 +23,19 @@ export default function Testimonial({ employees }: { employees: Employee[] }) {
     const author = employees.find(emp => emp['Name'] === currentTestimonial.Name);
 
     return (
-        <div className="relative mt-18 px-12 h-[300px] flex items-center">
-            <div className="p-8 rounded-lg shadow-lg w-full">
-                <p className="text-3xl mb-4 text-blue-500 text-center font-semibold">{currentTestimonial.Testimonial}</p>
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-4 items-center mt-18 min-h-[300px] py-10">
+            <button
+                onClick={handlePrevious}
+                className="hidden md:block border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"
+                aria-label="Previous testimonial"
+            >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <div className="rounded-lg shadow-lg w-full">
+                <p className="text-base lg:text-lg mb-4 text-blue-500 text-center font-medium">{currentTestimonial.Testimonial}</p>
                 {author && (
                     <div className="flex flex-col items-center text-center">
                         <div className="relative w-12 h-12 mx-auto mb-2">
@@ -43,24 +53,37 @@ export default function Testimonial({ employees }: { employees: Employee[] }) {
                     </div>
                 )}
             </div>
-            <button
-                onClick={handlePrevious}
-                className="absolute left-0 top-1/2 -translate-y-1/2 border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"
-                aria-label="Previous testimonial"
-            >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
+
             <button
                 onClick={handleNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"
+                className="hidden md:block border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"
                 aria-label="Next testimonial"
             >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
             </button>
+
+            <div className="md:hidden col-span-1 flex justify-center space-x-4">
+                <button
+                    onClick={handlePrevious}
+                    className="border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"
+                    aria-label="Previous testimonial"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button
+                    onClick={handleNext}
+                    className="border-2 border-gray-300 p-2 rounded-full shadow-lg hover:bg-gray-50"
+                    aria-label="Next testimonial"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
         </div>
     );
 } 

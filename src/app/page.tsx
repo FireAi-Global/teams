@@ -33,7 +33,6 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const employees = await fetchEmployees();
-
   const groupByTeam = (employees: Employee[]): Record<string, Employee[]> => {
     return employees.reduce((groups, employee) => {
       const team = employee.Team || 'Other';

@@ -1,5 +1,13 @@
 import { Employee, RawEmployee } from '../types/employee';
 
+interface CacheData {
+    employees: Employee[];
+    timestamp: number;
+}
+
+let cache: CacheData | null = null;
+const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+
 async function fetchCsvData(): Promise<string> {
     const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSGPDwCwGIuCGB3kkx_Fj2ixzOZaoRerf6pbxLpWmgfir7jKxJH-Kn8yoQqMq1zAE9hP7ZHEwVSrewp/pub?output=csv');
     return response.text();
@@ -34,7 +42,18 @@ function transformToEmployee(rawEmployee: RawEmployee): Employee {
 }
 
 export async function fetchEmployees(): Promise<Employee[]> {
+    if (cache && (Date.now() - cache.timestamp < CACHE_DURATION)) {
+        return cache.employees;
+    }
+
     const csvText = await fetchCsvData();
     const rawEmployees = parseCsvToJson(csvText);
-    return rawEmployees.map(transformToEmployee);
+    const employees = rawEmployees.map(transformToEmployee);
+
+    cache = {
+        employees,
+        timestamp: Date.now()
+    };
+
+    return employees;
 } 

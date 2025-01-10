@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     url: 'https://team.fireai.in',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'og-image.png',
         width: 1200,
         height: 630,
         alt: 'FireAI Team',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Meet the Team | FireAI.in',
     description: 'Meet the talented individuals who make up FireAI. Our diverse team of experts is passionate about advancing artificial intelligence technology.',
-    images: ['/og-image.jpg'],
+    images: ['og-image.png'],
   },
 };
 
